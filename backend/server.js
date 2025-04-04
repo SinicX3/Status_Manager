@@ -13,8 +13,6 @@ const io = new Server(server, {
 let currentColor = "#FFFFFF"; // Stocke la couleur actuelle
 
 io.on("connection", (socket) => {
-  console.log("Un utilisateur s'est connecté");
-
   // Envoie la couleur actuelle au nouvel utilisateur
   socket.emit("updateColor", currentColor);
 
@@ -22,10 +20,6 @@ io.on("connection", (socket) => {
   socket.on("changeColor", (newColor) => {
     currentColor = newColor; // Met à jour la couleur
     io.emit("updateColor", newColor); // Diffuse à tous les clients
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Un utilisateur s'est déconnecté");
   });
 });
 
