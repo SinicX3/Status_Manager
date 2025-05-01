@@ -1,14 +1,13 @@
-const socket = io("http://localhost:3001");
+import launch from "./Launch";
 
-const usersList = document.createElement("div");
-document.body.appendChild(usersList);
+const button = document.createElement("button")
+button.innerText = "Lancer"
+button.id = "btn__launch"
+const body = document.getElementById("root")
+body.appendChild(button)
 
-socket.on("updateUsers", (users) => {
-  usersList.innerHTML = ""; // Réinitialise la liste
-  users.forEach((number) => {
-    const newUser = document.createElement("div");
-    newUser.className = "user"
-    newUser.textContent = `Utilisateur #${number}`;
-    usersList.appendChild(newUser);
-  });
-});
+button.addEventListener('click', () => {
+  button.remove()
+  launch()
+  }
+)
