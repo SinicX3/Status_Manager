@@ -10,16 +10,20 @@ const io = new Server(server, {
   },
 });
 
-let currentColor = "#FFFFFF"; // Stocke la couleur actuelle
+let users = {}; // { socket.id: userNumber }
 
 io.on("connection", (socket) => {
-  // Envoie la couleur actuelle au nouvel utilisateur
-  socket.emit("updateColor", currentColor);
+  console.log("Nouvelle connexion :", socket.id);
+  const userNumber = Math.floor(Math.random() * 10000);
+  users[socket.id] = userNumber;
 
-  // Écoute les changements de couleur
-  socket.on("changeColor", (newColor) => {
-    currentColor = newColor; // Met à jour la couleur
-    io.emit("updateColor", newColor); // Diffuse à tous les clients
+  // Envoie la liste des utilisateurs mise à jour
+  io.emit("updateUsers", Object.values(users));
+
+  // Déconnexion
+  socket.on("disconnect", () => {
+    delete users[socket.id];
+    io.emit("updateUsers", Object.values(users));
   });
 });
 
