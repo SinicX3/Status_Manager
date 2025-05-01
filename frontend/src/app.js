@@ -2,12 +2,17 @@ import launch from "./Launch";
 
 const button = document.createElement("button")
 button.innerText = "Lancer"
-button.id = "btn__launch"
 const body = document.getElementById("root")
-body.appendChild(button)
+const form = document.createElement("form")
+const nameField = document.createElement("input")
+
+nameField.type = "text"
+
+form.appendChild(nameField)
+form.appendChild(button)
+body.appendChild(form) // Envoyer la valeur de nameField au backend
 
 button.addEventListener('click', () => {
-  button.remove()
-  launch()
-  }
-)
+  form.remove()
+  launch(nameField.value)
+})
