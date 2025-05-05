@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partage de couleur en temps réel</title>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button onclick="changeColor()">Changer la couleur</button>
+
+    <script>
+        const socket = io("http://localhost:3001"); // Connexion au serveur WebSocket
+
+        socket.on("updateColor", (newColor) => {
+            document.body.style.backgroundColor = newColor; // Met à jour la couleur
+        });
+
+        function changeColor() {
+            const newColor = "#" + Math.floor(Math.random() * 16777215).toString(16); // Génère une couleur aléatoire
+            socket.emit("changeColor", newColor); // Envoie au serveur
+        }
+    </script>
+
+</body>
+</html>
