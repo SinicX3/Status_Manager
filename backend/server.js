@@ -13,9 +13,11 @@ const io = new Server(server, {
 let users = {}; // { socket.id: userNumber }
 
 io.on("connection", (socket) => {
-  console.log("Nouvelle connexion :", socket.id);
+  // console.log("Nouvelle connexion :", socket.id);
   const userNumber = Math.floor(Math.random() * 10000);
   users[socket.id] = userNumber;
+
+  socket.on("new_user", (data) => {console.log(data.username)}) // Réception du username
 
   // Envoie la liste des utilisateurs mise à jour
   io.emit("updateUsers", Object.values(users));

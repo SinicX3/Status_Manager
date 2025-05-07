@@ -4,6 +4,9 @@ export default function launch(userName) {
   const usersList = document.createElement("div")
   document.body.appendChild(usersList)
 
+  socket.emit("new_user", { username: userName })
+  console.log("Emitting new_user:", { username: userName })  // Test côté client
+
   socket.on("updateUsers", (users) => {
     usersList.innerHTML = "" // Réinitialise la liste
     users.forEach((number) => {
@@ -15,8 +18,8 @@ export default function launch(userName) {
       newUser.textContent = `${userName}`
 
       const userState = document.createElement("div")
-      userState.className = "state"
-      userState.textContent = "Connecté"
+      userState.className = "state active"
+      userState.textContent = "Connecté(e)"
 
       divUser.appendChild(newUser)
       divUser.appendChild(userState)

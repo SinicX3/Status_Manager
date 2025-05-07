@@ -1,7 +1,7 @@
-import launch from "./Launch";
+import launch from "./launch";
 
 const button = document.createElement("button")
-button.innerText = "Lancer"
+button.innerText = "Se connecter"
 const body = document.getElementById("root")
 const form = document.createElement("form")
 const nameField = document.createElement("input")
