@@ -9,13 +9,13 @@ export default function launch(userName) {
 
   socket.on("updateUsers", (users) => {
     usersList.innerHTML = "" // Réinitialise la liste
-    users.forEach((number) => {
+    users.forEach((user) => {
       const divUser = document.createElement("div")
       divUser.className = "user"
 
       const newUser = document.createElement("div")
       newUser.className = "id"
-      newUser.textContent = `${userName}`
+      newUser.textContent = `${user}`
 
       const userState = document.createElement("div")
       userState.className = "state active"
