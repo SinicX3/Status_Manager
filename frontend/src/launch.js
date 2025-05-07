@@ -20,6 +20,7 @@ export default function launch(userName) {
       const userState = document.createElement("div")
       userState.className = "state active"
       userState.textContent = "Connecté(e)"
+      userState.addEventListener("click", () => userState.className.includes("active") ? userState.className = "state" : userState.className = "state active")
 
       divUser.appendChild(newUser)
       divUser.appendChild(userState)

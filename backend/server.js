@@ -13,11 +13,9 @@ const io = new Server(server, {
 let users = {}; // { socket.id: userNumber }
 
 io.on("connection", (socket) => {
-  // console.log("Nouvelle connexion :", socket.id);
 
   socket.on("new_user", (data) => {
     users[socket.id] = data.username;
-    console.log(users)
     io.emit("updateUsers", Object.values(users)); // Envoie la liste des utilisateurs mise à jour
   }) // Réception du username
 
