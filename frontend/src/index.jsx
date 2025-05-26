@@ -15,7 +15,7 @@ root.render(
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:id" element={<Session id=""/>} />
+        {/* <Route path="/:id" element={<Session id=""/>} /> */}
       </Routes>
     </Router>
   </StrictMode>,

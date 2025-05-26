@@ -1,20 +1,46 @@
-import launch from "../../launch"
+import { useState } from "react"
+import Launch from "../../Launch"
 
-function Home () {
+function Home() {
+  const [userName, setUserName] = useState("")
+  const [showLaunch, setShowLaunch] = useState(false)
 
-  return(<main>
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const nameField = document.getElementById("nameField")
+    if (nameField.value.trim() !== "") {
+      setUserName(nameField.value.trim())
+      setShowLaunch(true)
+    }
+  }
+
+  if (showLaunch) {
+    return <Launch userName={userName} />
+  }
+
+  return (
+    <main>
       <h2>Suivez votre groupe d'un coup d'oeil</h2>
-      <form id="create">
-        <input type="text" name="nameField" id="nameField"></input>
+      <form id="create" onSubmit={handleSubmit}>
+        <input type="text" name="nameField" id="nameField" />
+        <button type="submit">Créer une session</button>
       </form>
-      <button type="submit" onClick={() => (launch(nameField.value))}>Créer une session</button>
+
       <p>OU</p>
-      <button type="submit" onClick={() => (console.log(sessionId.value))}>Rejoindre la session</button>
-      <form id="join">
-        <input type="text" name="sessionId" id="sessionId"></input>
+
+      <form
+        id="join"
+        onSubmit={(e) => {
+          e.preventDefault()
+          const sessionId = document.getElementById("sessionId")
+          console.log(sessionId.value)
+        }}
+      >
+        <input type="text" name="sessionId" id="sessionId" />
+        <button type="submit">Rejoindre la session</button>
       </form>
     </main>
   )
 }
 
-export default Home 
+export default Home
