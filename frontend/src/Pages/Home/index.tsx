@@ -1,13 +1,13 @@
 import { useState } from "react"
-import Launch from "../../Launch"
+import Session from "../Session"
 
 function Home() {
   const [userName, setUserName] = useState("")
   const [showLaunch, setShowLaunch] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const nameField = document.getElementById("nameField")
+    const nameField = document.getElementById("nameField") as HTMLInputElement
     if (nameField.value.trim() !== "") {
       setUserName(nameField.value.trim())
       setShowLaunch(true)
@@ -15,7 +15,7 @@ function Home() {
   }
 
   if (showLaunch) {
-    return <Launch userName={userName} />
+    return <Session userName={userName} />
   }
 
   return (
@@ -32,7 +32,7 @@ function Home() {
         id="join"
         onSubmit={(e) => {
           e.preventDefault()
-          const sessionId = document.getElementById("sessionId")
+          const sessionId = document.getElementById("sessionId") as HTMLInputElement
           console.log(sessionId.value)
         }}
       >
