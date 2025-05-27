@@ -1,8 +1,10 @@
-function User({user, statut}) {
+import type { User } from "../../Data/types"
+
+function User({name, statut}: User) {
 
     return(
     <div className="user">
-        <div className="id">{user}</div>
+        <div className="id">{name}</div>
         <div className="statut">{statut}</div>
     </div>)
 }
