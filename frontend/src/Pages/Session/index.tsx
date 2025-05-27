@@ -13,24 +13,26 @@ interface StatusProps {
 function Session({userName}: UserProps) {
   const [users, setUsers] = useState<string[]>([])
   const socketRef = useRef<Socket | null>(null)
+  const status = "Connecté"
 
   // Mise à jour du front gérée par un état
   useEffect(() => {
     const socket: Socket = io("http://localhost:3001")
     socketRef.current = socket
 
-    socket.emit("new_user", { username: userName })
-    // socket.emit("upt_statut", { status: "AFK"})
+    socket.emit("new_user", { username: userName, status: status })
+    // socket.emit("upt_statut", {username: userName, status: "AFK"})
+    
     socket.on("updateUsers", (users: string[]) => {
       setUsers(users)
     })
         return () => socket.disconnect()
-  }, [userName])
+  }, [userName, status])
 
     return (
       <main>
-        {users.map((name, index) => (
-          <User key={index} name={name}/>
+        {users.map((userName, index) => (
+          <User key={index} userName={userName} status={status}/>
         ))}
       </main>
     )

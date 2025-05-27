@@ -1,5 +1,5 @@
 export interface User {
-    name: string;
-    statut?: string;
+    userName: string;
+    status?: string;
     group?: number;
 }

@@ -15,9 +15,14 @@ let users = {}; // { socket.id: userNumber }
 io.on("connection", (socket) => {
 
   socket.on("new_user", (data) => {
-    users[socket.id] = data.username;
+    users[socket.id] = [data.username, data.status];
     io.emit("updateUsers", Object.values(users)); // Envoie la liste des utilisateurs mise à jour
   }) // Réception du username
+
+  // socket.on("upt_statut", (data) => {
+  //   console.log(data.status)
+  //   // io.emit("updateUsers", Object.values(users)); // Envoie les éléments mis à jour
+  // }) // Mise à jour du statut
 
   // Déconnexion
   socket.on("disconnect", () => {
