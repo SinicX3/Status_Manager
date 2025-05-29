@@ -19,10 +19,11 @@ io.on("connection", (socket) => {
     io.emit("updateUsers", Object.values(users)); // Envoie la liste des utilisateurs mise à jour
   }) // Réception du username
 
-  // socket.on("upt_statut", (data) => {
+  socket.on("upt_statut", (data) => {
+    users[socket.id].status = data.status;
   //   console.log(data.status)
-  //   // io.emit("updateUsers", Object.values(users)); // Envoie les éléments mis à jour
-  // }) // Mise à jour du statut
+    io.emit("updateUsers", Object.values(users)); // Envoie les éléments mis à jour
+  }) // Mise à jour du statut
 
   // Déconnexion
   socket.on("disconnect", () => {

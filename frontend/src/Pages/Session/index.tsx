@@ -6,14 +6,10 @@ interface UserProps {
   userName: string
 }
 
-interface StatusProps {
-  status: string
-}
-
 function Session({userName}: UserProps) {
   const [users, setUsers] = useState<string[]>([])
   const socketRef = useRef<Socket | null>(null)
-  const status = "Connecté"
+  let status = "Connecté"
 
   // Mise à jour du front gérée par un état
   useEffect(() => {
@@ -21,18 +17,23 @@ function Session({userName}: UserProps) {
     socketRef.current = socket
 
     socket.emit("new_user", { username: userName, status: status })
-    // socket.emit("upt_statut", {username: userName, status: "AFK"})
     
     socket.on("updateUsers", (users: string[]) => {
       setUsers(users)
     })
         return () => socket.disconnect()
-  }, [userName, status])
+  }, [userName])
+
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.emit("upt_statut", { username: userName, status })
+    }
+  }, [status])
 
     return (
       <main>
-        {users.map((userName, index) => (
-          <User key={index} userName={userName} status={status}/>
+        {users.map((user, index) => (
+          <User key={index} socket={socketRef.current} userName={user[0]} status={user[1]}/>
         ))}
       </main>
     )
