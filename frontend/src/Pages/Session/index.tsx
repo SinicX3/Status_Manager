@@ -20,20 +20,27 @@ function Session({userName}: UserProps) {
     
     socket.on("updateUsers", (users: string[]) => {
       setUsers(users)
+      console.log(users)
     })
         return () => socket.disconnect()
   }, [userName])
 
   useEffect(() => {
     if (socketRef.current) {
-      socketRef.current.emit("upt_statut", { username: userName, status })
+      const socket: Socket = io("http://localhost:3001")
+      socketRef.current = socket
+      // socket.emit("upt_statut", { username: userName, status: status }) // A supprimer, obsolète
+
+      socket.on("updateUsers", (users: string[]) => {
+        setUsers(users)
+      })
     }
   }, [status])
 
     return (
       <main>
         {users.map((user, index) => (
-          <User key={index} socket={socketRef.current} userName={user[0]} status={user[1]}/>
+          <User key={index} socket={socketRef.current} id={user[0]} userName={user[1]} status={user[2]}/>
         ))}
       </main>
     )
