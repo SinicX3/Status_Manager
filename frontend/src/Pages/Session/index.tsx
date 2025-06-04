@@ -40,7 +40,7 @@ function Session({userName}: UserProps) {
     return (
       <main>
         {users.map((user, index) => (
-          <User key={index} socket={socketRef.current} id={user[0]} userName={user[1]} status={user[2]}/>
+          <User key={index} socket={socketRef.current} id={user.id} userName={user.userName} status={user.status}/>
         ))}
       </main>
     )

@@ -10,20 +10,27 @@ const io = new Server(server, {
   },
 });
 
-let users = {}; // { socket.id: userNumber }
+let users = []; // { socket.id: userNumber }
 
 io.on("connection", (socket) => {
 
   socket.on("new_user", (data) => {
-    users[socket.id] = [socket.id, data.username, data.status];
+    users[socket.id] = {
+      id: socket.id, 
+      userName: data.username, 
+      status: data.status
+    };
     io.emit("updateUsers", Object.values(users)); // Envoie la liste des utilisateurs mise à jour
   }) // Réception du username
 
   socket.on("upt_statut", (data) => {
-    console.log("test upt", data)
-    console.log("users-list", users[data.id].status)                                    // La liste des utilisateurs a été réinitialisée entre-temps
-    users[data.id].status = data.status;
-    // console.log("test user", data.userName)
+    
+    if (users[data.id]) {
+      users[data.id].status = data.status;
+      console.log(users[data.id])
+      io.emit("updateUsers", Object.values(users)); // La modif se fait, mais elle n'est pas encore prise en compte côté front
+    }
+
     io.emit("updateUsers", Object.values(users)); // Envoie les éléments mis à jour
   }) // Mise à jour du statut
 
