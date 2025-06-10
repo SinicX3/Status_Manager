@@ -27,7 +27,6 @@ io.on("connection", (socket) => {
     
     if (users[data.id]) {
       users[data.id].status = data.status;
-      console.log(users[data.id])
       io.emit("updateUsers", Object.values(users)); // La modif se fait, mais elle n'est pas encore prise en compte côté front
     }
 

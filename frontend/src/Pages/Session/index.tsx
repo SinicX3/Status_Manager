@@ -20,22 +20,9 @@ function Session({userName}: UserProps) {
     
     socket.on("updateUsers", (users: string[]) => {
       setUsers(users)
-      console.log(users)
     })
         return () => socket.disconnect()
-  }, [userName])
-
-  useEffect(() => {
-    if (socketRef.current) {
-      const socket: Socket = io("http://localhost:3001")
-      socketRef.current = socket
-      // socket.emit("upt_statut", { username: userName, status: status }) // A supprimer, obsolète
-
-      socket.on("updateUsers", (users: string[]) => {
-        setUsers(users)
-      })
-    }
-  }, [status])
+  }, [userName, status])
 
     return (
       <main>
