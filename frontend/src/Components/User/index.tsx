@@ -1,9 +1,10 @@
-import type { User } from "../../Data/types"
+import type { UserType } from "../../Data/types"
 import statusList from "../../Data/statusList.json" 
 import io from "socket.io-client"
 import { useEffect, useState } from "react";
+import { Socket } from "socket.io-client";
 
-function User({socket, userName, status: initialStatus, id}: User) {
+function User({socket}: Socket, {userName, status: initialStatus, id}: UserType) {
 
   const [currentStatus, setCurrentStatus] = useState(initialStatus); 
   

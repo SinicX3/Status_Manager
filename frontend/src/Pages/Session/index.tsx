@@ -1,13 +1,15 @@
 import User from "../../Components/User"
 import io from "socket.io-client"
+import { Socket } from "socket.io-client"
 import { useEffect, useRef, useState } from "react"
+import { UserType } from "../../Data/types"
 
 interface UserProps {
   userName: string
 }
 
 function Session({userName}: UserProps) {
-  const [users, setUsers] = useState<string[]>([])
+  const [users, setUsers] = useState<UserType[]>([])
   const socketRef = useRef<Socket | null>(null)
   let status = "Connecté"
 
@@ -18,7 +20,7 @@ function Session({userName}: UserProps) {
 
     socket.emit("new_user", { username: userName, status: status })
     
-    socket.on("updateUsers", (users: string[]) => {
+    socket.on("updateUsers", (users: UserType[]) => {
       setUsers(users)
     })
         return () => socket.disconnect()
