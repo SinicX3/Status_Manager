@@ -12,13 +12,14 @@ function Session({userName}: UserProps) {
   const [users, setUsers] = useState<UserType[]>([])
   const socketRef = useRef<Socket | null>(null)
   let status = "Connecté"
+  let group = 1
 
   // Mise à jour du front gérée par un état
   useEffect(() => {
     const socket: Socket = io("http://localhost:3001")
     socketRef.current = socket
 
-    socket.emit("new_user", { username: userName, status: status })
+    socket.emit("new_user", { username: userName, status: status, group })
     
     socket.on("updateUsers", (users: UserType[]) => {
       setUsers(users)
@@ -29,7 +30,7 @@ function Session({userName}: UserProps) {
     return (
       <main>
         {users.map((user, index) => (
-          <User key={index} socket={socketRef.current} id={user.id} userName={user.userName} status={user.status}/>
+          <User key={index} socket={socketRef.current} id={user.id} userName={user.userName} status={user.status} group={user.group}/>
         ))}
       </main>
     )

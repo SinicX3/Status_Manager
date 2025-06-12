@@ -4,7 +4,11 @@ import io from "socket.io-client"
 import { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 
-function User({socket}: Socket, {userName, status: initialStatus, id}: UserType) {
+interface UserProps extends UserType {
+  socket: Socket
+}
+
+function User({socket, userName, status: initialStatus, id}: UserProps) {
 
   const [currentStatus, setCurrentStatus] = useState(initialStatus); 
   

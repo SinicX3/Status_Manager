@@ -18,10 +18,11 @@ io.on("connection", (socket) => {
     users[socket.id] = {
       id: socket.id, 
       userName: data.username, 
-      status: data.status
+      status: data.status,
+      group: data.group
     };
     io.emit("updateUsers", Object.values(users)); // Envoie la liste des utilisateurs mise à jour
-  }) // Réception du username
+  }) // Réception des informations
 
   socket.on("upt_statut", (data) => {
     

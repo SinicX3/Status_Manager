@@ -1,6 +1,6 @@
 export interface UserType {
     id: string;
     userName: string;
-    status?: string;
+    status: string;
     group?: number;
 }
