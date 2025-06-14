@@ -10,7 +10,10 @@ const io = new Server(server, {
   },
 });
 
-let users = []; // { socket.id: userNumber }
+const randomHex = () => Math.floor(Math.random() * 0xffffffff).toString(16).padStart(8, "0").toUpperCase();
+const socketId = randomHex()
+
+let users = {}; // Initialisation de la liste des utilisateurs de la session
 
 io.on("connection", (socket) => {
 
@@ -21,23 +24,23 @@ io.on("connection", (socket) => {
       status: data.status,
       group: data.group
     };
-    io.emit("updateUsers", Object.values(users)); // Envoie la liste des utilisateurs mise à jour
+    io.emit("updateUsers", {users: Object.values(users), socketName: socketId}); // Envoie la liste des utilisateurs mise à jour
   }) // Réception des informations
 
   socket.on("upt_statut", (data) => {
     
     if (users[data.id]) {
       users[data.id].status = data.status;
-      io.emit("updateUsers", Object.values(users)); // La modif se fait, mais elle n'est pas encore prise en compte côté front
+      io.emit("updateUsers", {users: Object.values(users), socketName: socketId}); // La modif se fait, mais elle n'est pas encore prise en compte côté front
     }
 
-    io.emit("updateUsers", Object.values(users)); // Envoie les éléments mis à jour
+    io.emit("updateUsers", {users: Object.values(users), socketName: socketId}); // Envoie les éléments mis à jour
   }) // Mise à jour du statut
 
   // Déconnexion
   socket.on("disconnect", () => {
     delete users[socket.id];
-    io.emit("updateUsers", Object.values(users));
+    io.emit("updateUsers", {users: Object.values(users), socketName: socketId});
   });
 });
 
